@@ -85,32 +85,66 @@ public static int pow(int x, int n) {
 }
 
 
-	// Returns the integer part of x1 / x2 
+	
+	// Returns the integer part of x1 / x2
 	public static int div(int x1, int x2) {
-    int quotient = 0;
+    if (x2 == 0) {
+        throw new ArithmeticException("Division by zero is not allowed.");
+    }
 
-    for (int remaining = x1; remaining >= x2; remaining = minus(remaining, x2)) {
-        quotient++;
+    int quotient = 0;
+    int isNegative = 0; 
+
+    if (x1 < 0) {
+        x1 = minus(0, x1); 
+        isNegative = 1 - isNegative; 
+    }
+    if (x2 < 0) {
+        x2 = minus(0, x2); 
+        isNegative = 1 - isNegative; 
+    }
+
+    while (x1 >= x2) {
+        x1 = minus(x1, x2);
+        quotient = plus(quotient, 1);
+    }
+
+    if (isNegative == 1) {
+        quotient = minus(0, quotient);
     }
 
     return quotient;
 }
 
 
+
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		int remaining = x1;
-		
-		while (remaining >= x2) {
-			remaining = minus(remaining, x2);
-		}
-		while (remaining < 0) { 
-			remaining = plus(remaining, x2);
-		}
-		
-		return remaining;
-	}
-	
+    if (x2 == 0) {
+        throw new ArithmeticException("Modulo by zero is not allowed.");
+    }
+
+    int isNegative = 0; 
+
+    if (x1 < 0) {
+        x1 = minus(0, x1); 
+        isNegative = 1; 
+    }
+    if (x2 < 0) {
+        x2 = minus(0, x2); 
+    }
+
+    while (x1 >= x2) {
+        x1 = minus(x1, x2);
+    }
+
+    if (isNegative == 1) {
+        x1 = minus(x2, x1); 
+    }
+
+    return x1;
+}
+
 		
 
 	// Returns the integer part of sqrt(x) 
