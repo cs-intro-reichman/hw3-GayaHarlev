@@ -25,43 +25,104 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		
+		for (int i = 0; i < x2; i++) {
+			x1++;
+		}
+	
+		for (int i = 0; i > x2; i--) {
+			x1--;
+		}
+	
+		return x1;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		
+		for (int i = 0; i < x2; i++) {
+			x1--;
+		}
+
+		for (int i = 0; i > x2; i--) {
+			x1++;
+		}
+	
+		return x1;
 	}
+	
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
+		int result = 0;
+	
+		int absX2;
+		if (x2 < 0) {
+			absX2 = -x2;
+		} else {
+			absX2 = x2;
+		}
+	
+		for (int i = 0; i < absX2; i++) {
+			result = plus(result, x1);
+		}
+	
+		if (x2 < 0) {
+			result = -result;
+		}
+	
+		return result;
 	}
+	
 
 	// Returns x^n (for n >= 0)
-	public static int pow(int x, int n) {
-		// Replace the following statement with your code
-		return 0;
-	}
+public static int pow(int x, int n) {
+    int result = 1;
+    for (int i = 0; i < n; i++) {
+        result = times(result, x);
+    }
+    return result;
+}
+
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}
+    int quotient = 0;
+
+    for (int remaining = x1; remaining >= x2; remaining = minus(remaining, x2)) {
+        quotient++;
+    }
+
+    return quotient;
+}
+
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-		// Replace the following statement with your code
-		return 0;
-	}	
+		int remaining = x1;
+		
+		while (remaining >= x2) {
+			remaining = minus(remaining, x2);
+		}
+		while (remaining < 0) { 
+			remaining = plus(remaining, x2);
+		}
+		
+		return remaining;
+	}
+	
+		
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
-		// Replace the following statement with your code
-		return 0;
-	}	  	  
+		if (x == 0 || x == 1) {
+			return x;
+		}		
+		int result = 0;
+		while (times(result, result) <= x) {
+			result = plus(result, 1);
+		}
+		return minus(result, 1);
+	}
+				
 }
