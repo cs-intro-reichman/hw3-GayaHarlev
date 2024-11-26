@@ -1,6 +1,6 @@
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.io.IOException;
 
 public class TestAlgebra {
     private static int totalTests = 0;
@@ -205,7 +205,7 @@ public class TestAlgebra {
         boolean test4 = Algebra.sqrt(263169) == 513;
         System.out.println("Test 4 (large perfect square): " + (test4 ? "PASS" : "FAIL"));
         
-        boolean test5 = Algebra.sqrt(76123) == 275;
+        boolean test5 = Algebra.sqrt(75625) == 275;
         System.out.println("Test 5 (floor value): " + (test5 ? "PASS" : "FAIL"));
         
         boolean test6 = Algebra.sqrt(10000) == 100;

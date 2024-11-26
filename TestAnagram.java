@@ -1,100 +1,250 @@
-public class TestAnagram {
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class TestAlgebra {
     private static int totalTests = 0;
     private static int passedTests = 0;
 
     public static void main(String[] args) {
-        testIsAnagram();
-        testPreProcess();
-        testRandomAnagram();
+        testPlus();
+        testMinus();
+        testTimes();
+        testPow();
+        testDiv();
+        testMod();
+        testSqrt();
+        testForbiddenOperators();
         
         System.out.println("\nTotal tests: " + totalTests);
         System.out.println("Passed tests: " + passedTests);
         System.out.println("Success rate: " + (passedTests * 100.0 / totalTests) + "%");
     }
 
-    public static int testIsAnagram() {
-        System.out.println("\nTesting isAnagram method:");
-        totalTests += 5;
+    private static int testPlus() {
+        System.out.println("\nTesting plus operations:");
+        totalTests += 6;
+        
+        boolean test1 = Algebra.plus(2, 3) == 5;
+        System.out.println("Test 1 (basic addition): " + (test1 ? "PASS" : "FAIL"));
+        
+        boolean test2 = Algebra.plus(0, 0) == 0;
+        System.out.println("Test 2 (zero addition): " + (test2 ? "PASS" : "FAIL"));
+        
+        boolean test3 = Algebra.plus(-1, 1) == 0;
+        System.out.println("Test 3 (negative numbers): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.plus(100, 200) == 300;
+        System.out.println("Test 4 (large numbers): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.plus(-5, -3) == -8;
+        System.out.println("Test 5 (negative result): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.plus(Integer.MAX_VALUE - 1, 1) == Integer.MAX_VALUE;
+        System.out.println("Test 6 (max value): " + (test6 ? "PASS" : "FAIL"));
 
-        // Test case 1: Basic anagram
-        boolean test1 = Anagram.isAnagram("silent", "listen");
-        System.out.println("Test 1 (basic anagram): " + (test1 ? "PASS" : "FAIL"));
-        
-        // Test case 2: Different lengths
-        boolean test2 = !Anagram.isAnagram("hello", "world!");
-        System.out.println("Test 2 (different lengths): " + (test2 ? "PASS" : "FAIL"));
-        
-        // Test case 4: Empty strings
-        boolean test4 = Anagram.isAnagram("", "");
-        System.out.println("Test 4 (empty strings): " + (test4 ? "PASS" : "FAIL"));
-        
-        // Test case 5: Complex anagram with spaces
-        boolean test5 = Anagram.isAnagram("William Shakespeare", "I am a weakish speller");
-        System.out.println("Test 5 (complex anagram): " + (test5 ? "PASS" : "FAIL"));
-        
-        // Test case 6: Case sensitivity
-        boolean test6 = Anagram.isAnagram("Silent", "ListeN");
-        System.out.println("Test 6 (case sensitivity): " + (test6 ? "PASS" : "FAIL"));
-
-        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + 
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
                     (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
         passedTests += passed;
         return passed;
     }
 
-    public static int testPreProcess() {
-        System.out.println("\nTesting preProcess method:");
-        totalTests += 4;
+    private static int testMinus() {
+        System.out.println("\nTesting minus operations:");
+        totalTests += 6;
+        
+        boolean test1 = Algebra.minus(7, 2) == 5;
+        System.out.println("Test 1 (basic subtraction): " + (test1 ? "PASS" : "FAIL"));
+        
+        boolean test2 = Algebra.minus(2, 7) == -5;
+        System.out.println("Test 2 (negative result): " + (test2 ? "PASS" : "FAIL"));
+        
+        boolean test3 = Algebra.minus(0, 0) == 0;
+        System.out.println("Test 3 (zero subtraction): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.minus(100, 50) == 50;
+        System.out.println("Test 4 (large numbers): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.minus(-5, -3) == -2;
+        System.out.println("Test 5 (negative numbers): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.minus(Integer.MIN_VALUE + 1, 1) == Integer.MIN_VALUE;
+        System.out.println("Test 6 (min value): " + (test6 ? "PASS" : "FAIL"));
 
-        // Test case 1: Simple lowercase
-        boolean test1 = Anagram.preProcess("abc").equals("abc");
-        System.out.println("Test 1 (simple lowercase): " + (test1 ? "PASS" : "FAIL"));
-        
-        // Test case 2: Preserve spaces
-        boolean test2 = Anagram.preProcess("Hello World!").equals("hello world");
-        System.out.println("Test 2 (preserve spaces): " + (test2 ? "PASS" : "FAIL"));
-        
-        // Test case 3: Convert to lowercase
-        boolean test3 = Anagram.preProcess("HeLLo").equals("hello");
-        System.out.println("Test 3 (case conversion): " + (test3 ? "PASS" : "FAIL"));
-        
-        // Test case 4: Empty string
-        boolean test4 = Anagram.preProcess("").equals("");
-        System.out.println("Test 4 (empty string): " + (test4 ? "PASS" : "FAIL"));
-
-        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + (test4 ? 1 : 0);
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+                    (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
         passedTests += passed;
         return passed;
     }
 
-    public static int testRandomAnagram() {
-        System.out.println("\nTesting randomAnagram method:");
-        totalTests += 3;
+    private static int testTimes() {
+        System.out.println("\nTesting times operations:");
+        totalTests += 6;
         
-        // Test case 1: Check if result is an anagram
-        String original = "hello";
-        String randomized = Anagram.randomAnagram(original);
-        boolean test1 = Anagram.isAnagram(original, randomized);
-        System.out.println("Test 1 (is anagram): " + (test1 ? "PASS" : "FAIL"));
+        boolean test1 = Algebra.times(3, 4) == 12;
+        System.out.println("Test 1 (basic multiplication): " + (test1 ? "PASS" : "FAIL"));
         
-        // Test case 2: Check if same length
-        boolean test2 = original.length() == randomized.length();
-        System.out.println("Test 2 (same length): " + (test2 ? "PASS" : "FAIL"));
+        boolean test2 = Algebra.times(0, 5) == 0;
+        System.out.println("Test 2 (multiply by zero): " + (test2 ? "PASS" : "FAIL"));
         
-        // Test case 3: Check randomness (run multiple times)
-        boolean foundDifferent = false;
-        String first = Anagram.randomAnagram("testing");
-        for (int i = 0; i < 10; i++) {
-            String next = Anagram.randomAnagram("testing");
-            if (!first.equals(next)) {
-                foundDifferent = true;
-                break;
-            }
-        }
-        System.out.println("Test 3 (randomness): " + (foundDifferent ? "PASS" : "FAIL"));
+        boolean test3 = Algebra.times(-2, 3) == -6;
+        System.out.println("Test 3 (negative number): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.times(-2, -3) == 6;
+        System.out.println("Test 4 (negative numbers): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.times(100, 0) == 0;
+        System.out.println("Test 5 (large number by zero): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.times(1, 1) == 1;
+        System.out.println("Test 6 (identity): " + (test6 ? "PASS" : "FAIL"));
 
-        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (foundDifferent ? 1 : 0);
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+                    (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
         passedTests += passed;
         return passed;
+    }
+
+    private static int testPow() {
+        System.out.println("\nTesting power operations:");
+        totalTests += 6;
+        
+        boolean test1 = Algebra.pow(5, 3) == 125;
+        System.out.println("Test 1 (basic power): " + (test1 ? "PASS" : "FAIL"));
+        
+        boolean test2 = Algebra.pow(2, 0) == 1;
+        System.out.println("Test 2 (zero exponent): " + (test2 ? "PASS" : "FAIL"));
+        
+        boolean test3 = Algebra.pow(0, 5) == 0;
+        System.out.println("Test 3 (zero base): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.pow(1, 10) == 1;
+        System.out.println("Test 4 (identity): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.pow(2, 4) == 16;
+        System.out.println("Test 5 (power of 2): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.pow(-2, 3) == -8;
+        System.out.println("Test 6 (negative base): " + (test6 ? "PASS" : "FAIL"));
+
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+                    (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
+        passedTests += passed;
+        return passed;
+    }
+
+    private static int testDiv() {
+        System.out.println("\nTesting division operations:");
+        totalTests += 6;
+        
+        boolean test1 = Algebra.div(12, 3) == 4;
+        System.out.println("Test 1 (basic division): " + (test1 ? "PASS" : "FAIL"));
+        
+        boolean test2 = Algebra.div(25, 7) == 3;
+        System.out.println("Test 2 (integer division): " + (test2 ? "PASS" : "FAIL"));
+        
+        boolean test3 = Algebra.div(0, 5) == 0;
+        System.out.println("Test 3 (zero dividend): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.div(100, 10) == 10;
+        System.out.println("Test 4 (large numbers): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.div(-15, 3) == -5;
+        System.out.println("Test 5 (negative dividend): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.div(-15, -3) == 5;
+        System.out.println("Test 6 (negative numbers): " + (test6 ? "PASS" : "FAIL"));
+
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+                    (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
+        passedTests += passed;
+        return passed;
+    }
+
+    private static int testMod() {
+        System.out.println("\nTesting modulo operations:");
+        totalTests += 6;
+        
+        boolean test1 = Algebra.mod(25, 7) == 4;
+        System.out.println("Test 1 (basic modulo): " + (test1 ? "PASS" : "FAIL"));
+        
+        boolean test2 = Algebra.mod(120, 6) == 0;
+        System.out.println("Test 2 (no remainder): " + (test2 ? "PASS" : "FAIL"));
+        
+        boolean test3 = Algebra.mod(0, 5) == 0;
+        System.out.println("Test 3 (zero dividend): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.mod(7, 3) == 1;
+        System.out.println("Test 4 (small numbers): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.mod(17, 5) == 2;
+        System.out.println("Test 5 (larger numbers): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.mod(100, 10) == 0;
+        System.out.println("Test 6 (divisible): " + (test6 ? "PASS" : "FAIL"));
+
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+                    (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
+        passedTests += passed;
+        return passed;
+    }
+
+    private static int testSqrt() {
+        System.out.println("\nTesting square root operations:");
+        totalTests += 6;
+        
+        boolean test1 = Algebra.sqrt(36) == 6;
+        System.out.println("Test 1 (perfect square): " + (test1 ? "PASS" : "FAIL"));
+        
+        boolean test2 = Algebra.sqrt(0) == 0;
+        System.out.println("Test 2 (zero): " + (test2 ? "PASS" : "FAIL"));
+        
+        boolean test3 = Algebra.sqrt(1) == 1;
+        System.out.println("Test 3 (one): " + (test3 ? "PASS" : "FAIL"));
+        
+        boolean test4 = Algebra.sqrt(263169) == 513;
+        System.out.println("Test 4 (large perfect square): " + (test4 ? "PASS" : "FAIL"));
+        
+        boolean test5 = Algebra.sqrt(75625) == 275;
+        System.out.println("Test 5 (floor value): " + (test5 ? "PASS" : "FAIL"));
+        
+        boolean test6 = Algebra.sqrt(10000) == 100;
+        System.out.println("Test 6 (power of 10): " + (test6 ? "PASS" : "FAIL"));
+
+        int passed = (test1 ? 1 : 0) + (test2 ? 1 : 0) + (test3 ? 1 : 0) + 
+                    (test4 ? 1 : 0) + (test5 ? 1 : 0) + (test6 ? 1 : 0);
+        passedTests += passed;
+        return passed;
+    }
+
+    private static int testForbiddenOperators() {
+        System.out.println("\nTesting forbidden operators:");
+        totalTests += 1;
+        
+        try {
+            String algebraCode = new String(Files.readAllBytes(Paths.get("Algebra.java")));
+            algebraCode = algebraCode.replaceAll("\".*\"", "")
+                                   .replaceAll("/\\*.*?\\*/", "")
+                                   .replaceAll("//.*", "");
+            
+            String[] forbidden = {
+                "\\+[^+]", "-[^-]", "\\*", "/", "%", "Math\\.pow", "Math\\.sqrt"
+            };
+
+            for (String operator : forbidden) {
+                if (algebraCode.matches(".*" + operator + ".*")) {
+                    System.out.println("Test 1 (no forbidden operators): FAIL");
+                    System.out.println("Found forbidden operator matching: " + operator);
+                    return 0;
+                }
+            }
+            System.out.println("Test 1 (no forbidden operators): PASS");
+            passedTests += 1;
+            return 1;
+        } catch (IOException e) {
+            System.out.println("Test 1 (no forbidden operators): FAIL");
+            System.out.println("Could not read Algebra.java");
+            return 0;
+        }
     }
 } 
