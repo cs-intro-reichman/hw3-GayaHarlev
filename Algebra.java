@@ -1,4 +1,3 @@
-
 // the Java operations a + b, a - b, a * b, a / b, a % b, and without calling 
 // Math.sqrt. All the functions in this class operate on int values and
 // return int values.
@@ -111,3 +110,38 @@ public class Algebra {
 				}
 				else{
 					return minus(0, i);
+				}
+			}
+			else if(times(temp2, i) > temp1){
+				i--;
+				if((x1>0 && x2>0) || (x1<0 && x2<0)){
+					return i;
+				}
+				else{
+					return minus(0, i);
+				}
+			}
+		}
+		return result;
+	}
+
+	// Returns x1 % x2
+	public static int mod(int x1, int x2) {
+		int result;
+		result = minus(x1, times(x2, div(x1, x2)));
+		return result; 
+	}	
+
+	// Returns the integer part of sqrt(x) 
+	public static int sqrt(int x) {
+		if(x==0 || x==1){
+			return x;
+		}
+		int xsqrt = 0;
+		while(pow(xsqrt, 2)-x<0 && xsqrt<x){
+			xsqrt++;
+		}	
+		return xsqrt;
+	}
+
+}
