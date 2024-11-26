@@ -4,7 +4,7 @@
 // return int values.
 
 public class Algebra {
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 	    // Tests some of the operations
 	    System.out.println(plus(2,3));   // 2 + 3
 	    System.out.println(minus(7,2));  // 7 - 2
@@ -18,145 +18,95 @@ public class Algebra {
    		System.out.println(div(25,7));   // 25 / 7
    		System.out.println(mod(25,7));   // 25 % 7
    		System.out.println(mod(120,6));  // 120 % 6    
-   		System.out.println(sqrt(36));
-		System.out.println(sqrt(263169));
-   		System.out.println(sqrt(76123));
+   		System.out.println(sqrt(36));    // sqrt(36)
+		System.out.println(sqrt(263169));// sqrt(263169)
+   		System.out.println(sqrt(76123)); // sqrt(76123)
 	}  
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		
-		for (int i = 0; i < x2; i++) {
+		while (x2 > 0) {
 			x1++;
+			x2--;
 		}
-	
-		for (int i = 0; i > x2; i--) {
+		while (x2 < 0) {
 			x1--;
+			x2++;
 		}
-	
 		return x1;
 	}
 
 	// Returns x1 - x2
 	public static int minus(int x1, int x2) {
-		
-		for (int i = 0; i < x2; i++) {
+		while (x2 > 0) {
 			x1--;
+			x2--;
 		}
-
-		for (int i = 0; i > x2; i--) {
+		while (x2 < 0) {
 			x1++;
+			x2++;
 		}
-	
 		return x1;
 	}
-	
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		int result = 0;
-	
-		int absX2;
-		if (x2 < 0) {
-			absX2 = -x2;
-		} else {
-			absX2 = x2;
-		}
-	
+		int absX2 = (x2 < 0) ? minus(0, x2) : x2;
 		for (int i = 0; i < absX2; i++) {
 			result = plus(result, x1);
 		}
-	
 		if (x2 < 0) {
-			result = -result;
+			result = minus(0, result);
 		}
-	
 		return result;
 	}
-	
 
 	// Returns x^n (for n >= 0)
-public static int pow(int x, int n) {
-    int result = 1;
-    for (int i = 0; i < n; i++) {
-        result = times(result, x);
-    }
-    return result;
-}
+	public static int pow(int x, int n) {
+		int result = 1;
+		for (int i = 0; i < n; i++) {
+			result = times(result, x);
+		}
+		return result;
+	}
 
-
-	
-	// Returns the integer part of x1 / x2
+	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-    if (x2 == 0) {
-        throw new ArithmeticException("Division by zero is not allowed.");
-    }
-
-    int quotient = 0;
-    int isNegative = 0; 
-
-    if (x1 < 0) {
-        x1 = minus(0, x1); 
-        isNegative = 1 - isNegative; 
-    }
-    if (x2 < 0) {
-        x2 = minus(0, x2); 
-        isNegative = 1 - isNegative; 
-    }
-
-    while (x1 >= x2) {
-        x1 = minus(x1, x2);
-        quotient = plus(quotient, 1);
-    }
-
-    if (isNegative == 1) {
-        quotient = minus(0, quotient);
-    }
-
-    return quotient;
-}
-
-
+		int quotient = 0;
+		int absX1 = (x1 < 0) ? minus(0, x1) : x1;
+		int absX2 = (x2 < 0) ? minus(0, x2) : x2;
+		while (absX1 >= absX2) {
+			absX1 = minus(absX1, absX2);
+			quotient++;
+		}
+		if ((x1 < 0 && x2 > 0) || (x1 > 0 && x2 < 0)) {
+			quotient = minus(0, quotient);
+		}
+		return quotient;
+	}
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
-    if (x2 == 0) {
-        throw new ArithmeticException("Modulo by zero is not allowed.");
-    }
-
-    int isNegative = 0; 
-
-    if (x1 < 0) {
-        x1 = minus(0, x1); 
-        isNegative = 1; 
-    }
-    if (x2 < 0) {
-        x2 = minus(0, x2); 
-    }
-
-    while (x1 >= x2) {
-        x1 = minus(x1, x2);
-    }
-
-    if (isNegative == 1) {
-        x1 = minus(x2, x1); 
-    }
-
-    return x1;
-}
-
-		
+		int remainder = x1;
+		while (remainder >= x2) {
+			remainder = minus(remainder, x2);
+		}
+		while (remainder < 0) {
+			remainder = plus(remainder, x2);
+		}
+		return remainder;
+	}
 
 	// Returns the integer part of sqrt(x) 
 	public static int sqrt(int x) {
 		if (x == 0 || x == 1) {
 			return x;
-		}		
+		}
 		int result = 0;
 		while (times(result, result) <= x) {
 			result = plus(result, 1);
 		}
 		return minus(result, 1);
 	}
-				
 }
