@@ -1,13 +1,13 @@
 // Computes the periodical payment necessary to pay a given loan.
 public class LoanCalc {
-
+    
     static double epsilon = 0.001;  // Approximation accuracy
-    static int iterationCounter;   // Number of iterations 
-
+    static int iterationCounter;    // Number of iterations 
+    
     // Gets the loan data and computes the periodical payment.
     // Expects to get three command-line arguments: loan amount (double),
     // interest rate (double, as a percentage), and number of payments (int).  
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
         // Gets the loan data
         double loan = Double.parseDouble(args[0]);
         double rate = Double.parseDouble(args[1]);
@@ -27,16 +27,15 @@ public class LoanCalc {
 
     // Computes the ending balance of a loan, given the loan amount, the periodical
     // interest rate (as a percentage), the number of periods (n), and the periodical payment.
-    private static double endBalance(double loan, double rate, int n, double payment) {
+    private static double endBalance(double loan, double rate, int n, double payment) {    
         double balance = loan;
-        double monthlyRate = rate / 100;
         for (int i = 0; i < n; i++) {
-            balance = balance + (balance * monthlyRate);
-            balance = balance - payment;
+            balance += balance * (rate / 100); // Apply interest
+            balance -= payment;               // Subtract payment
         }
         return balance;
     }
-
+    
     // Uses sequential search to compute an approximation of the periodical payment
     // that will bring the ending balance of a loan close to 0.
     // Given: the sum of the loan, the periodical interest rate (as a percentage),
@@ -44,41 +43,50 @@ public class LoanCalc {
     // Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
         iterationCounter = 0;
-        double payment = 0;
-        while (true) {
+        double payment = 0.0;
+
+        // Dynamic step based on loan size and epsilon
+        double step = loan * epsilon;
+
+        while (endBalance(loan, rate, n, payment) > epsilon) {
+            payment += step;
             iterationCounter++;
-            if (Math.abs(endBalance(loan, rate, n, payment)) <= epsilon) {
+
+            // Safety condition to prevent infinite loop
+            if (iterationCounter > 1000000) {
+                System.out.println("Exceeded maximum iterations in bruteForceSolver.");
                 break;
             }
-            payment += epsilon;
         }
+
         return payment;
     }
-
+    
     // Uses bisection search to compute an approximation of the periodical payment 
     // that will bring the ending balance of a loan close to 0.
     // Given: the sum of the loan, the periodical interest rate (as a percentage),
     // the number of periods (n), and epsilon, the approximation's accuracy
     // Side effect: modifies the class variable iterationCounter.
-    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {
+    public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
         iterationCounter = 0;
-        double low = 0;
-        double high = loan + (loan * rate / 100);
-        double payment = 0;
+        double low = 0.0;
+        double high = loan;
+        double mid = 0.0;
 
         while (high - low > epsilon) {
-            iterationCounter++;
-            payment = (low + high) / 2;
-            double balance = endBalance(loan, rate, n, payment);
+            mid = (low + high) / 2.0;
+            double balance = endBalance(loan, rate, n, mid);
 
-            if (Math.abs(balance) <= epsilon) {
-                break;
-            } else if (balance > 0) {
-                low = payment;
+            if (balance > 0) {
+                low = mid; // Payment is too low
             } else {
-                high = payment;
+                high = mid; // Payment is too high
             }
+
+            iterationCounter++;
         }
-        return payment;
+
+        return mid;
     }
 }
+ש
