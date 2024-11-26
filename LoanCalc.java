@@ -28,8 +28,11 @@ public class LoanCalc {
 	// Computes the ending balance of a loan, given the loan amount, the periodical
 	// interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	private static double endBalance(double loan, double rate, int n, double payment) {	
-		// Replace the following statement with your code
-		return 0;
+        double balance = loan;
+        for (int i = 0; i < n; i++) {
+            balance = (balance - payment) * (1 + (rate/100));
+        }
+        return balance;
 	}
 	
 	// Uses sequential search to compute an approximation of the periodical payment
@@ -38,8 +41,15 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
-		// Replace the following statement with your code
-		return 0;
+		double g = loan /n;
+		iterationCounter = 0;
+		double balance = endBalance(loan, rate, n, g);
+		while(balance> 0){
+			iterationCounter++;
+			g += epsilon;
+			balance = endBalance(loan, rate, n, g);
+		}
+		return g;
     }
     
     // Uses bisection search to compute an approximation of the periodical payment 
@@ -48,7 +58,26 @@ public class LoanCalc {
 	// the number of periods (n), and epsilon, the approximation's accuracy
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
-        // Replace the following statement with your code
-		return 0;
+        double highVal = loan;
+		double lowVal = loan/n;
+		iterationCounter = 0;
+		//setting the highval so that the end balance be negative
+		while (endBalance(loan, rate, n, highVal) > 0) {
+			highVal *= 2; 
+		}
+		double g = (lowVal+highVal)/2;
+
+		while((highVal-lowVal) > epsilon){
+			double balance = endBalance(loan, rate, n, g);
+            iterationCounter++;
+			if(balance>0){
+				lowVal = g;
+			}
+			else{
+				highVal = g;
+			}
+			g = (lowVal + highVal)/2;
+		}
+		return g;
     }
 }
